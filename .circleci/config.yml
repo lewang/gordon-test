@@ -32,7 +32,7 @@ workflows:
   build-n-deploy:
     zobs:
       - build
-      - test
+      - test:
           requires:
             - build
       - deploy:
