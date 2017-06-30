@@ -38,7 +38,7 @@ workflows:
             - build
       - build-approval2:
           type: approval
-          required:
+          requires:
             - build-approval
       - test:
           requires:
