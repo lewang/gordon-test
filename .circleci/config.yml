@@ -32,11 +32,11 @@ workflows:
   build-n-deploy:
     jobs:
       - build
-      - build-approval
+      - build-approval:
           type: approval
           requires:
             - build
-      - build-approval2
+      - build-approval2:
           type: approval
           required:
             - build-approval
