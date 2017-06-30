@@ -32,12 +32,17 @@ workflows:
   build-n-deploy:
     jobs:
       - build
-      - test:
+      - build-approval
+          type: approval
           requires:
             - build
-      - deploy:
+      - build-approval2
+          type: approval
+          required:
+            - build-approval
+      - test:
           requires:
-            - test
+            - build-approval2
 
 # # testing bad config
 # workflows:
