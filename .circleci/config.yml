@@ -26,30 +26,3 @@ jobs:
           command: echo "deploying! (not really) "
           pwd: /
 
-
-workflows:
-  version: 2
-  build-n-deploy:
-    jobs:
-      - build
-      - build-approval:
-          type: approval
-          requires:
-            - build
-      - build-approval2:
-          type: approval
-          requires:
-            - build-approval
-      - test:
-          requires:
-            - build-approval2
-
-# # testing bad config
-# workflows:
-#   version: 2
-#   build-and-test:
-#     jobs:
-#       - build
-#       - deploy-dev:
-#         requires:
-#           - build
