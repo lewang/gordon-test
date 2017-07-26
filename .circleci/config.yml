@@ -14,7 +14,7 @@ jobs:
     working_directory: /gordon-test
     steps:
       - run:
-          command: cat not_here
+          command: echo hi
           pwd: /
 
   deploy:
@@ -38,13 +38,6 @@ workflows:
       - deploy:
           requires:
             - test
-
-# # testing bad config
-# workflows:
-#   version: 2
-#   build-and-test:
-#     jobs:
-#       - build
-#       - deploy-dev:
-#         requires:
-#           - build
+          filters:
+            tags:
+              only: /^config-test/
