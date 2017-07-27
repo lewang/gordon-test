@@ -34,18 +34,18 @@ workflows:
       - build:
           filters:
             tags:
-              only: /^config-test/
+              only: /^config-test.*/
       - test:
           requires:
             - build
           filters:
             tags:
-              only: /^config-test/
+              only: /^config-test.*/
       - deploy:
           requires:
             - test
           filters:
             tags:
-              only: /^config-test/
+              only: /^config-test.*/
             branches:
               ignore: /.*/
