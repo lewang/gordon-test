@@ -33,7 +33,10 @@ workflows:
   build-n-deploy:
     jobs:
       # - build
-      - longtime
+      - longtime:
+          filters:
+            tags:
+              only: /^test-tag.*/
       # - deploy:
       #     requires:
       #       - build
