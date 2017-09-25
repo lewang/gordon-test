@@ -1,4 +1,4 @@
-version: 2.0
+version: 2
 jobs:
   build:
     docker:
@@ -10,15 +10,6 @@ jobs:
       - run:
           command: pip install -r requirements.txt
           name: Install dependencies
-
-#      - run: apt-get update
-#      - run: apt-get install java
-#
-#      - run: wget -O /tmp/selenium-server-standalone-2.45.0.jar "http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar"
-#
-#      - run:
-#          command: java -jar /tmp/selenium-server-standalone-2.45.0.jar
-#          background: true
 
       - run:
           command: setsid python -m SimpleHTTPServer 8080
@@ -36,6 +27,13 @@ jobs:
           path: /tmp/my_artifacts
           destination: text-data
 
+  fail:
+    docker:
+      - image: python:2.7
+    working_directory: /gordon-test
+    steps:
+      - run: exit 1
+
   deploy:
     docker:
       - image: python:2.7
@@ -45,6 +43,8 @@ jobs:
           command: echo "deploying! (not really) "
           pwd: /
 
+      - run: sleep 60
+
       - run: echo "Upstream artifacts in ${CIRCLE_UPSTREAM_ARTIFACTS}"
 
       - run: find ${CIRCLE_UPSTREAM_ARTIFACTS}
@@ -53,16 +53,28 @@ jobs:
 
       - run: cat ${CIRCLE_UPSTREAM_ARTIFACTS}/build/0/text-data/second
 
-      - run: cat nonexistent
-
 workflows:
-  version: 2
+  version: scheduled-workflows-mvp
   build-n-deploy:
     jobs:
       - build
+      - fail:
+          requires:
+            - build
       - deploy:
-          filters:
-            branches:
-              only: /m.ster/
+          requires:
+            - build
+  scheduleme:
+    triggers:
+      - type: scheduled
+        frequency: "0 */5 * * * ?"
+        branches:
+          - master
+    jobs:
+      - build
+      - fail:
+          requires:
+            - build
+      - deploy:
           requires:
             - build
