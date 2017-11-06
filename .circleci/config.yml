@@ -67,8 +67,9 @@ workflows:
   scheduleme:
     triggers:
       - schedule:
-          frequency: "50 * * * *"
-          branches: {only: ['master']}
+          cron: "50 * * * *"
+          filters:
+            branches: {only: ['master']}
     jobs:
       - build
       - fail:
