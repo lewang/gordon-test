@@ -66,10 +66,10 @@ workflows:
             - build
   scheduleme:
     triggers:
-      - type: scheduled
-        frequency: "47 * * * *"
-        branches:
-          - master
+      - schedule:
+          frequency: "49 * * * *"
+          branches:
+            - master
     jobs:
       - build
       - fail:
