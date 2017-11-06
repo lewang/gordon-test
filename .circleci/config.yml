@@ -68,8 +68,7 @@ workflows:
     triggers:
       - schedule:
           frequency: "49 * * * *"
-          branches:
-            - master
+          branches: {only: ['master']}
     jobs:
       - build
       - fail:
