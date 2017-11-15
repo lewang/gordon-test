@@ -64,17 +64,3 @@ workflows:
       - deploy:
           requires:
             - build
-  scheduleme:
-    triggers:
-      - schedule:
-          cron: "50 * * * *"
-          filters:
-            branches: {only: ['master']}
-    jobs:
-      - build
-      - fail:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - build
