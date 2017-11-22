@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: python:2.7
+    resource_class: small
     working_directory: /gordon-test
     steps:
       - checkout
@@ -30,6 +31,7 @@ jobs:
   fail:
     docker:
       - image: python:2.7
+    resource_class: small
     working_directory: /gordon-test
     steps:
       - run: exit 1
@@ -37,6 +39,7 @@ jobs:
   deploy:
     docker:
       - image: python:2.7
+    resource_class: small
     working_directory: /gordon-test
     steps:
       - run:
