@@ -61,7 +61,7 @@ workflows:
   build-n-deploy:
     jobs:
       - build
-      - fail
+      - fail:
           requires:
             - build
       - deploy:
