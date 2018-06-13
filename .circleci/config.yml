@@ -62,8 +62,7 @@ workflows:
     jobs:
       - build
       - fail:
-          requires:
-            - build
+          requires: build
       - deploy:
           requires:
             - build
