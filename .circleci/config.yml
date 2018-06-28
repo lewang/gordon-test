@@ -8,26 +8,6 @@ jobs:
     steps:
       - checkout
 
-      - run:
-          command: pip install -r requirements.txt
-          name: Install dependencies
-
-      - run:
-          command: setsid python -m SimpleHTTPServer 8080
-          pwd: /gordon-test/server-root
-          background: true
-
-      - run:
-          name: make some files
-          command: |
-            mkdir -p /tmp/my_artifacts
-            echo "first artifact" > /tmp/my_artifacts/first
-            echo "second artifact" > /tmp/my_artifacts/second
-
-      - store_artifacts:
-          path: /tmp/my_artifacts
-          destination: text-data
-
   deploy:
     docker:
       - image: python:2.7
@@ -52,8 +32,10 @@ workflows:
   version: 2
   build-n-deploy:
     jobs:
+      - build
       - approval-job:
           type: approval
+          requires: ["build"]
       - deploy:
           context: awesome-restricted-context
           requires:
