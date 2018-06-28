@@ -28,14 +28,6 @@ jobs:
           path: /tmp/my_artifacts
           destination: text-data
 
-  fail:
-    docker:
-      - image: python:2.7
-    resource_class: small
-    working_directory: /gordon-test
-    steps:
-      - run: exit 1
-
   deploy:
     docker:
       - image: python:2.7
@@ -46,7 +38,7 @@ jobs:
           command: echo "deploying! (not really) "
           pwd: /
 
-      - run: sleep 60
+      - run: sleep 2
 
       - run: echo "Upstream artifacts in ${CIRCLE_UPSTREAM_ARTIFACTS}"
 
@@ -61,9 +53,6 @@ workflows:
   build-n-deploy:
     jobs:
       - build
-      - fail:
-          requires:
-            - build
       - deploy:
           requires:
             - build
