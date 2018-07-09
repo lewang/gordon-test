@@ -36,4 +36,4 @@ workflows:
       - deploy:
           context: awesome-restricted-context
           requires:
-            - approval-job
+            - build
