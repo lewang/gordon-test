@@ -33,9 +33,6 @@ workflows:
   build-n-deploy:
     jobs:
       - build
-      - approval-job:
-          type: approval
-          requires: ["build"]
       - deploy:
           context: awesome-restricted-context
           requires:
