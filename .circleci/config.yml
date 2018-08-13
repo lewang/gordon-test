@@ -20,6 +20,8 @@ jobs:
 
       - run: sleep 2
 
+      - run: echo "foo ${foo}"
+
       - run: echo "Upstream artifacts in ${CIRCLE_UPSTREAM_ARTIFACTS}"
 
       - run: find ${CIRCLE_UPSTREAM_ARTIFACTS}
@@ -34,6 +36,6 @@ workflows:
     jobs:
       - build
       - deploy:
-          context: awesome-restricted-context
+          context: foo-context
           requires:
             - build
