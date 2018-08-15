@@ -30,6 +30,24 @@ jobs:
 
       - run: cat ${CIRCLE_UPSTREAM_ARTIFACTS}/build/0/text-data/second
 
+  deploy2:
+    docker:
+      - image: python:2.7
+    resource_class: small
+    working_directory: /gordon-test
+    steps:
+      - run: set
+
+  deploy3:
+    docker:
+      - image: python:2.7
+    resource_class: small
+    working_directory: /gordon-test
+    steps:
+      - run: set
+
+
+
 workflows:
   version: 2
   build-n-deploy:
@@ -37,5 +55,13 @@ workflows:
       - build
       - deploy:
           context: foo-context
+          requires:
+            - build
+      - deploy2:
+          context: blank-name-envvar-context
+          requires:
+            - build
+      - deploy3:
+          context: blank-value-envvar-context
           requires:
             - build
